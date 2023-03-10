@@ -1,3 +1,5 @@
+import Steckbriefe from "./pages/Steckbriefe";
+
 export default function App() {
-	return <h1>Example</h1>
+	return <Steckbriefe/>
 };
