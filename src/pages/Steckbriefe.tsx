@@ -16,8 +16,14 @@ export const Steckbriefe = () => {
 	let video: HTMLVideoElement
 	onMount(() => {
 		video.playbackRate = 0.8
-		setInterval(() => {setIndex(index()+3)}, 3000)
+		setInterval(() => {
+			setIndex(wrap(3))
+		}, 10000)
 	})
+
+	const wrap = (offset: number) => {
+		return (index()+offset) % (steckbriefe().length);
+	}
 
 	const [steckbriefe] = createResource<SteckbriefProps[]>(loadSteckbriefe)
 	const [index, setIndex] = createSignal(0)
@@ -26,12 +32,12 @@ export const Steckbriefe = () => {
 		<section class="w-screen h-screen relative">
 			<video ref={video} autoplay muted loop src="/videos/Background.mp4" class="absolute w-full h-full object-cover -z-10 opacity-60" />
 			
-			<div class="absolute w-full h-full grid grid-cols-3 place-content-center">
+			<div class="absolute w-full h-full grid grid-cols-[1fr,1fr,1fr] place-items-center">
 				{/* <span>{steckbriefe.loading && "Loading..."}</span> */}
-				{/* Hier wird zurzeit nur der erste steckbrief angezeigt */}
-				<span><Steckbrief data={!steckbriefe.loading && steckbriefe()[index()]} /></span>
-				<span><Steckbrief data={!steckbriefe.loading && steckbriefe()[index()+1]} /></span>
-				<span><Steckbrief data={!steckbriefe.loading && steckbriefe()[index()+2]} /></span>
+				{/* Hier werden jeweils drei Steckbriefe angezeigt */}
+				<Steckbrief data={!steckbriefe.loading && steckbriefe()[wrap(0)]} />
+				<Steckbrief data={!steckbriefe.loading && steckbriefe()[wrap(1)]} />
+				<Steckbrief data={!steckbriefe.loading && steckbriefe()[wrap(2)]} />
 			</div>
 
 			<img src="/svgs/TopBar.svg" alt="TopBar" class="absolute w-full h-full object-cover" />
