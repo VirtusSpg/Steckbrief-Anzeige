@@ -1,18 +1,34 @@
-import { onMount } from "solid-js"
-import LogoImage from "../components/LogoImage"
+import { createResource, onMount } from "solid-js"
+import { Steckbrief } from "../components/Steckbrief"
+import SteckbriefProps from "../model/SteckbriefProps"
 import LogoLaufband from "./LogoLaufband"
 
-export default function Steckbriefe() {
+const loadSteckbriefe = async () =>
+	(await fetch("/data/accreditation.json", {
+		headers: {
+			'Content-Type': 'application/json',
+			'Accept': 'application/json'
+		}
+	})).json()
+
+export const Steckbriefe = () => {
 
 	let video: HTMLVideoElement
-
 	onMount(() => {
 		video.playbackRate = 0.8
 	})
 
+	const [steckbriefe] = createResource<SteckbriefProps[]>(loadSteckbriefe)
+
 	return (
 		<section class="w-screen h-screen relative">
 			<video ref={video} /*autoplay*/ muted loop src="/videos/Background.mp4" class="absolute w-full h-full object-cover -z-10 opacity-60" />
+
+			<div class="absolute w-full h-full grid place-content-center">
+				{/* <span>{steckbriefe.loading && "Loading..."}</span> */}
+				{/* Hier wird zurzeit nur der erste steckbrief angezeigt */}
+				<Steckbrief data={!steckbriefe.loading && steckbriefe()[0]} />
+			</div>
 
 			<img src="/svgs/TopBar.svg" alt="TopBar" class="absolute w-full h-full object-cover" />
 
@@ -20,7 +36,8 @@ export default function Steckbriefe() {
 				<img src="/logos/Virtus-Seefeld.svg" alt="Virtus Seefeld" class="w-28 h-28" />
 			</div>
 
-			{/* <LogoLaufband/> */}
+			{/* Not yet working */}
+			<LogoLaufband />
 		</section>
 	)
 }
