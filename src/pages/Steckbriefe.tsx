@@ -16,7 +16,7 @@ export const Steckbriefe = () => {
 	let video: HTMLVideoElement
 	onMount(() => {
 		video.playbackRate = 0.8
-		//setInterval(() => {setIndex(index()+1)}, 1000)
+		setInterval(() => {setIndex(index()+1)}, 1000)
 	})
 
 	const [steckbriefe] = createResource<SteckbriefProps[]>(loadSteckbriefe)
