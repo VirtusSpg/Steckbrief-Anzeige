@@ -16,7 +16,7 @@ export const Steckbriefe = () => {
 	let video: HTMLVideoElement
 	onMount(() => {
 		video.playbackRate = 0.8
-		setInterval(() => {setIndex(index()+1)}, 1000)
+		setInterval(() => {setIndex(index()+3)}, 3000)
 	})
 
 	const [steckbriefe] = createResource<SteckbriefProps[]>(loadSteckbriefe)
@@ -26,10 +26,12 @@ export const Steckbriefe = () => {
 		<section class="w-screen h-screen relative">
 			<video ref={video} autoplay muted loop src="/videos/Background.mp4" class="absolute w-full h-full object-cover -z-10 opacity-60" />
 			
-			<div class="absolute w-full h-full grid place-content-center">
+			<div class="absolute w-full h-full grid grid-cols-3 place-content-center">
 				{/* <span>{steckbriefe.loading && "Loading..."}</span> */}
 				{/* Hier wird zurzeit nur der erste steckbrief angezeigt */}
-				<Steckbrief data={!steckbriefe.loading && steckbriefe()[index()]} />
+				<span><Steckbrief data={!steckbriefe.loading && steckbriefe()[index()]} /></span>
+				<span><Steckbrief data={!steckbriefe.loading && steckbriefe()[index()+1]} /></span>
+				<span><Steckbrief data={!steckbriefe.loading && steckbriefe()[index()+2]} /></span>
 			</div>
 
 			<img src="/svgs/TopBar.svg" alt="TopBar" class="absolute w-full h-full object-cover" />
