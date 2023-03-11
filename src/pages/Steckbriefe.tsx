@@ -1,4 +1,4 @@
-import { createResource, onMount } from "solid-js"
+import { createResource, createSignal, onMount } from "solid-js"
 import { Steckbrief } from "../components/Steckbrief"
 import SteckbriefProps from "../model/SteckbriefProps"
 import LogoLaufband from "./LogoLaufband"
@@ -16,18 +16,28 @@ export const Steckbriefe = () => {
 	let video: HTMLVideoElement
 	onMount(() => {
 		video.playbackRate = 0.8
+		setInterval(() => {
+			setIndex(wrap(3))
+		}, 10000)
 	})
 
+	const wrap = (offset: number) => {
+		return (index()+offset) % (steckbriefe().length);
+	}
+
 	const [steckbriefe] = createResource<SteckbriefProps[]>(loadSteckbriefe)
+	const [index, setIndex] = createSignal(0)
 
 	return (
 		<section class="w-screen h-screen relative">
-			<video ref={video} /*autoplay*/ muted loop src="/videos/Background.mp4" class="absolute w-full h-full object-cover -z-10 opacity-60" />
-
-			<div class="absolute w-full h-full grid place-content-center">
+			<video ref={video} autoplay muted loop src="/videos/Background.mp4" class="absolute w-full h-full object-cover -z-10 opacity-60" />
+			
+			<div class="absolute w-full h-full grid grid-cols-[1fr,1fr,1fr] place-items-center">
 				{/* <span>{steckbriefe.loading && "Loading..."}</span> */}
-				{/* Hier wird zurzeit nur der erste steckbrief angezeigt */}
-				<Steckbrief data={!steckbriefe.loading && steckbriefe()[0]} />
+				{/* Hier werden jeweils drei Steckbriefe angezeigt */}
+				<Steckbrief data={!steckbriefe.loading && steckbriefe()[wrap(0)]} />
+				<Steckbrief data={!steckbriefe.loading && steckbriefe()[wrap(1)]} />
+				<Steckbrief data={!steckbriefe.loading && steckbriefe()[wrap(2)]} />
 			</div>
 
 			<img src="/svgs/TopBar.svg" alt="TopBar" class="absolute w-full h-full object-cover" />
