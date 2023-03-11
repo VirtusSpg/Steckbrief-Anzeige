@@ -25,9 +25,12 @@ export const Steckbriefe = () => {
 			<video ref={video} /*autoplay*/ muted loop src="/videos/Background.mp4" class="absolute w-full h-full object-cover -z-10 opacity-60" />
 
 			<div class="absolute w-full h-full grid place-content-center">
-				{/* <span>{steckbriefe.loading && "Loading..."}</span> */}
-				{/* Hier wird zurzeit nur der erste steckbrief angezeigt */}
-				<Steckbrief data={!steckbriefe.loading && steckbriefe()[0]} />
+				{steckbriefe.loading 
+				? "Loading..." 
+				: steckbriefe().map((steckbrief) => (
+					<Steckbrief data={steckbrief} />
+					))
+				}
 			</div>
 
 			<img src="/svgs/TopBar.svg" alt="TopBar" class="absolute w-full h-full object-cover" />
