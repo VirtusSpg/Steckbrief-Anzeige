@@ -1,4 +1,4 @@
-import { createResource, onMount } from "solid-js"
+import { createResource, createSignal, onMount } from "solid-js"
 import { Steckbrief } from "../components/Steckbrief"
 import SteckbriefProps from "../model/SteckbriefProps"
 import LogoLaufband from "./LogoLaufband"
@@ -16,21 +16,20 @@ export const Steckbriefe = () => {
 	let video: HTMLVideoElement
 	onMount(() => {
 		video.playbackRate = 0.8
+		//setInterval(() => {setIndex(index()+1)}, 1000)
 	})
 
 	const [steckbriefe] = createResource<SteckbriefProps[]>(loadSteckbriefe)
+	const [index, setIndex] = createSignal(0)
 
 	return (
 		<section class="w-screen h-screen relative">
-			<video ref={video} /*autoplay*/ muted loop src="/videos/Background.mp4" class="absolute w-full h-full object-cover -z-10 opacity-60" />
-
+			<video ref={video} autoplay muted loop src="/videos/Background.mp4" class="absolute w-full h-full object-cover -z-10 opacity-60" />
+			
 			<div class="absolute w-full h-full grid place-content-center">
-				{steckbriefe.loading 
-				? "Loading..." 
-				: steckbriefe().map((steckbrief) => (
-					<Steckbrief data={steckbrief} />
-					))
-				}
+				{/* <span>{steckbriefe.loading && "Loading..."}</span> */}
+				{/* Hier wird zurzeit nur der erste steckbrief angezeigt */}
+				<Steckbrief data={!steckbriefe.loading && steckbriefe()[index()]} />
 			</div>
 
 			<img src="/svgs/TopBar.svg" alt="TopBar" class="absolute w-full h-full object-cover" />
