@@ -1,3 +1,31 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+h1 {
+	@apply text-4xl font-bold
+}
+
+h2 {
+	@apply text-3xl font-medium
+}
+
+h3 {
+	@apply text-xl font-medium
+}
+
+.steckbrief-bild {
+	clip-path: polygon(0 5%, 100% 0%, 100% 95%, 0% 100%);
+	@apply object-[50%,20%];
+}
+
+.steckbrief-art>* {
+	@apply row-start-1 row-end-2 col-start-1 col-end-2;
+	@apply rounded-2xl shadow-2xl;
+}
+
+.steckbrief {
+	@apply border-b-4 border-b-virtusred border-opacity-50
+		   border-r-4 border-r-virtusred
+		   ;
+}

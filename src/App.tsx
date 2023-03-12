@@ -1,5 +1,5 @@
-import { Steckbriefe } from "./pages/Steckbriefe";
+import { Mainpage } from "./pages/Mainpage";
 
 export default function App() {
-	return <Steckbriefe/>
+	return <Mainpage />
 };

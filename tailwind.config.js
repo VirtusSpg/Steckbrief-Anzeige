@@ -7,7 +7,11 @@ module.exports = {
 	darkMode: 'class',
 	theme: {
 		extend: {
-	
+			colors: {
+				'lightblue': 'rgb(27,188,237)',
+				'darkblue': 'rgb(22,61,136)',
+				'virtusred': 'rgb(230,5,37)',
+			}
 		},
 
 		keyframes: {
